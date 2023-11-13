@@ -1,0 +1,177 @@
+server:
+  #  path: /
+  #  proxy: true
+  host: "0.0.0.0"
+  port: 8080
+
+# Local paths to modules and config
+modules:
+  plugins:
+    provider:
+      type: folder
+      path: /data/pylon/plugins
+  #
+  requirements:
+    mode: relaxed
+    provider:
+      type: folder
+      path: /data/pylon/requirements
+  #
+  config:
+    provider:
+      type: folder
+      path: /data/pylon/configs
+  #
+  preload:
+    market:
+      provider:
+        type: git
+        delete_git_dir: false
+        depth: null
+      source: https://github.com/carrier-io/market.git
+      branch: main
+#  skip:
+#    - ui_performance
+
+configs:
+  market:
+    local_preordered_plugins:
+      - design-system
+      - auth
+      - projects
+      - shared
+      - tasks
+      - secrets
+      - backend_performance
+      - artifacts
+      - theme
+      - integrations
+      - reporter_email
+      - reporter_jira
+      - processing_severity_filter
+      - scheduling
+      - admin
+      - ui_performance
+      - azure_devops
+      - kubernetes
+      - gcp_integration
+      - performance_analysis
+      - s3_integration
+      - email_base
+      - email_template
+      - vertex_ai
+      - prompts
+      - open_ai
+      - engagements
+      - kanban
+#      - system_reporter_email
+#      - security
+#      - security_scanner_zap
+#      - tasklets
+#      - shared_orch
+#      - engagements
+#      - kanban
+#      - issues
+#      - kb
+#      - reporter_engagement
+
+# Session storage
+sessions:
+  redis:
+    host: redis
+    password: password
+  prefix: pylon_session_
+
+# Traefik config
+#traefik:
+#  redis:
+#    host: redis
+#    password: password
+#  rootkey: traefik
+#  entrypoint: https
+#  rule: PathPrefix(`/`)
+#  node_name: core
+#  node_hostname: pylon
+
+# Events queue
+events:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    user: user
+    password: password
+    vhost: carrier
+    queue: events
+    hmac_key: key
+    hmac_digest: sha512
+    callback_workers: 16
+
+# RPC
+rpc:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    user: user
+    password: password
+    vhost: carrier
+    queue: rpc
+    hmac_key: key
+    hmac_digest: sha512
+    callback_workers: 16
+  id_prefix: "core_"
+  # trace: true
+
+# Module/config storage
+storage:
+  endpoint: minio:9000
+  access_key: admin
+  secret_key: password
+  secure: false
+  buckets:
+    module: module
+    config: config
+
+# Loki logging settings
+logging:
+  fluentbit:
+    address: 192.168.0.108
+    port: 24224
+    facility: user
+    socktype: udp
+    service: pylon
+    tag: pylon
+
+  # loki:
+  #   buffering: false
+  #   # buffer_capacity: 1000
+  #   # buffer_flush_interval: 120
+  #   # buffer_flush_deadline: 300
+  #   include_node_name: true
+  #   include_level_name: true
+  #   include_logger_name: true
+  #   verify: true
+  #   url: 'http://192.168.0.108:3100/loki/api/v1/push'
+
+
+# syslog:
+#   address: fluentbit
+#   port: 514
+#   facility: user
+#   socktype: udp
+
+
+# Settings for Flask application
+application:
+  # EXPLAIN_TEMPLATE_LOADING: true
+  # Sessions
+#  PREFERRED_URL_SCHEME: https
+  SECRET_KEY: SecretDevKeyForLocalUseOnlyChangedOnProd
+  SESSION_COOKIE_NAME: session_id
+
+# dulwich git manager
+git_manager:
+  default:
+    username:
+    password:
+    key:
+    key_data:
