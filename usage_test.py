@@ -4,7 +4,8 @@ from tools import log
 from tools.context import Context
 import os
 import yaml  # pylint: disable=E0401
-from main_enabler import enable_loggings
+
+from loglib.main_enabler import enable_loggings
 
 
 def read_settings(path):

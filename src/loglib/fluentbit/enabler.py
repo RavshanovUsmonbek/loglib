@@ -16,9 +16,8 @@
 #   limitations under the License.
 
 """
-    Logging tool: SysLog support
+    Logging tool: Fluentbit support
 """
-import time
 import socket
 import logging
 import logging.handlers

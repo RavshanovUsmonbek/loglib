@@ -4,8 +4,8 @@ import time
 import traceback
 
 
-from base.emitter import LogEmitterBase
-from base.thread import PeriodicFlush
+from loglib.base.emitter import LogEmitterBase
+from loglib.base.thread import PeriodicFlush
 
 
 class LogHandlerBase(logging.Handler):

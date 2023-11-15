@@ -1,4 +1,4 @@
-from base.emitter import LogEmitterBase
+from loglib.base.emitter import LogEmitterBase
 
 
 class CarrierLokiLogEmitter(LogEmitterBase):
