@@ -24,9 +24,10 @@ import logging.handlers
 from fluent import handler as fluent_handler
 
 
-def enable_fluentbit_logging_with_syslog(context):
+def enable_syslog_fluentbit_logging(context):
     """Enable logging to SysLog"""
     if "fluentbit" not in context.settings.get("logging", {}):
+        print("Failed to enable fluentbit")
         return
     #
     settings = context.settings.get("logging").get("fluentbit")
@@ -40,6 +41,7 @@ def enable_fluentbit_logging_with_syslog(context):
     )
     #
     service = settings.get("service", "")
+    # labels = settings.get("labels", {})
     #
     handler = logging.handlers.SysLogHandler(
         address=address,
@@ -55,7 +57,7 @@ def enable_fluentbit_logging_with_syslog(context):
     logging.getLogger("").addHandler(handler)
 
 
-def enable_fluentbit_logging(context):
+def enable_forward_fluentbit_logging(context):
     settings = context.settings.get("logging").get("fluentbit")
     host = settings.get("address", "localhost")
     port = settings.get("port", 24224)
@@ -81,3 +83,13 @@ def enable_fluentbit_logging(context):
     formatter = fluent_handler.FluentRecordFormatter(format)
     handler.setFormatter(formatter)
     logging.getLogger("").addHandler(handler)
+
+
+def enable_fluentbit_logging(context):
+    settings = context.settings.get("logging").get("fluentbit")
+    if not settings:
+        return
+    if settings["type"] == "syslog":
+        enable_syslog_fluentbit_logging(context)
+    elif settings["type"] == "forward":
+        enable_forward_fluentbit_logging(context)

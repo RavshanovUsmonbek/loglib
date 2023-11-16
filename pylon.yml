@@ -134,16 +134,17 @@ storage:
 # Loki logging settings
 logging:
   fluentbit:
+    type: forward
     address: 192.168.0.108
     port: 24224
-    # facility: user
-    # socktype: udp
+    facility: user
+    socktype: udp
     service: pylon
     tag: pylon
 
   loki:
-    buffering: false
-    buffer_capacity: 1000
+    buffering: true
+    buffer_capacity: 10
     buffer_flush_interval: 120
     buffer_flush_deadline: 300
     include_node_name: true
@@ -151,6 +152,8 @@ logging:
     include_logger_name: true
     verify: true
     url: 'http://192.168.0.108:3100/loki/api/v1/push'
+    labels:
+      service: pylon
 
 
 # syslog:

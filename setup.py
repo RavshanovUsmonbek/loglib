@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="my-loglib",
-    version="0.1.0",
+    version="0.1.3",
     description="A Library for log management",
     packages=find_packages(where="src"),
     package_dir={"": "src"},

@@ -54,7 +54,6 @@ class LogEmitterBase(ABC):
             }
         )
         #
-        print(f"{self._connection.headers}")
         return self._connection
 
     def disconnect(self):
@@ -72,7 +71,6 @@ class LogEmitterBase(ABC):
             try:
                 connection = self.connect()
                 payload = json.dumps(data).encode("utf-8")
-                print(connection.headers)
                 response = connection.post(
                     self.push_url,
                     data=payload,
@@ -80,7 +78,6 @@ class LogEmitterBase(ABC):
                     timeout=self.timeout,
                 )
                 response.raise_for_status()
-                print(response.status_code)
                 return response
             except Exception as e:  # pylint: disable=W0702
                 self.disconnect()

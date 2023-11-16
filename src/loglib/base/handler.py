@@ -25,7 +25,6 @@ class LogHandlerBase(logging.Handler):
             if self.settings.get("include_logger_name", True):
                 additional_labels["logger"] = record.name
             #
-            additional_labels["my_field"] = "custom"
             self.emitter.emit_line(record_ts, record_data, additional_labels)
         except:  # pylint: disable=W0702
             # In this case we should NOT use logging to log logging error. Only print()
@@ -45,7 +44,7 @@ class LogBufferingHandlerBase(logging.handlers.BufferingHandler):
         super().handleError(record)
         self.emitter.disconnect()
 
-    def shouldFlush(self):
+    def shouldFlush(self, record):
         """Check if we need to flush messages"""
         return (len(self.buffer) >= self.capacity) or (
             time.time() - self.last_flush

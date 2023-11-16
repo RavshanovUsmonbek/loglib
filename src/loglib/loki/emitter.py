@@ -38,6 +38,7 @@ class CarrierLokiLogEmitter(LogEmitterBase):
             ]
         }
         #
+
         self.post_data(data)
         #
         # TODO: batches with different stream labels (a.k.a. multiple streams support)
